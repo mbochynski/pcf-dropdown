@@ -1,6 +1,7 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
-import { HelloWorld, IHelloWorldProps } from "./HelloWorld";
+import { HelloWorld, IHelloWorldProps, ItemType } from "./HelloWorld";
 import * as React from "react";
+import { DropdownMenuItemType } from "@fluentui/react";
 
 export class DropdownFluent
   implements ComponentFramework.ReactControl<IInputs, IOutputs>
@@ -36,9 +37,35 @@ export class DropdownFluent
   public updateView(
     context: ComponentFramework.Context<IInputs>
   ): React.ReactElement {
+    const itemsRecords = context.parameters.Items;
+    const items = itemsRecords.sortedRecordIds.map((id) => {
+      const record = itemsRecords.records[id];
+
+      const rawItemType = record.getValue("itemType");
+      let itemType = DropdownMenuItemType.Normal;
+      switch (rawItemType) {
+        case "header":
+          itemType = DropdownMenuItemType.Header;
+          break;
+        case "divider":
+          itemType = DropdownMenuItemType.Divider;
+          break;
+        default:
+          itemType = DropdownMenuItemType.Normal;
+          break;
+      }
+
+      return {
+        key: record.getValue("value"),
+        text: record.getValue("value"),
+        itemType,
+      } as ItemType;
+    });
+
     const props: IHelloWorldProps = {
       label: context.parameters.Label.raw ?? "",
       themeJSON: context.parameters.Theme.raw ?? "",
+      items,
     };
     return React.createElement(HelloWorld, props);
   }

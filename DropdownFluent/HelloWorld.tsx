@@ -8,9 +8,16 @@ import {
 import { ThemeProvider } from "@fluentui/react";
 import { useTheme } from "./useTheme";
 
+export interface ItemType {
+  key: string;
+  text: string;
+  itemType?: DropdownMenuItemType;
+}
+
 export interface IHelloWorldProps {
   label?: string;
   themeJSON?: string;
+  items: ItemType[];
 }
 
 const dropdownStyles: Partial<IDropdownStyles> = { dropdown: { width: 300 } };
@@ -39,6 +46,7 @@ const dropdownControlledExampleOptions = [
 export const HelloWorld: React.FC<IHelloWorldProps> = ({
   label,
   themeJSON,
+  items,
 }) => {
   const [selectedItem, setSelectedItem] = React.useState<IDropdownOption>();
 
@@ -58,7 +66,7 @@ export const HelloWorld: React.FC<IHelloWorldProps> = ({
         selectedKey={selectedItem ? selectedItem.key : undefined}
         onChange={onChange}
         placeholder="Select an option"
-        options={dropdownControlledExampleOptions}
+        options={items}
         // styles={dropdownStyles}
       />
     </ThemeProvider>
