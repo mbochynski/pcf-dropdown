@@ -1,5 +1,9 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
-import { HelloWorld, IHelloWorldProps, ItemType } from "./HelloWorld";
+import {
+  FluentDropdown,
+  IFluentDropdownProps,
+  ItemType,
+} from "./FluentDropdown";
 import * as React from "react";
 import { DropdownMenuItemType } from "@fluentui/react";
 
@@ -63,14 +67,14 @@ export class DropdownFluent
       } as ItemType;
     });
 
-    const props: IHelloWorldProps = {
+    const props: IFluentDropdownProps = {
       label: context.parameters.Label.raw ?? "",
       themeJSON: context.parameters.Theme.raw ?? "",
       items,
       value: context.parameters.Value.raw ?? "",
       onChange: this.onChange.bind(this),
     };
-    return React.createElement(HelloWorld, props);
+    return React.createElement(FluentDropdown, props);
   }
 
   public onChange(value: string | undefined) {

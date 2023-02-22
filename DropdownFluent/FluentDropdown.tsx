@@ -3,7 +3,6 @@ import {
   Dropdown,
   DropdownMenuItemType,
   IDropdownOption,
-  IDropdownStyles,
 } from "@fluentui/react/lib/Dropdown";
 import { ThemeProvider } from "@fluentui/react";
 import { useTheme } from "./useTheme";
@@ -14,7 +13,7 @@ export interface ItemType {
   itemType?: DropdownMenuItemType;
 }
 
-export interface IHelloWorldProps {
+export interface IFluentDropdownProps {
   label?: string;
   themeJSON?: string;
   items: ItemType[];
@@ -22,7 +21,7 @@ export interface IHelloWorldProps {
   onChange: (value: string | undefined) => void;
 }
 
-export const HelloWorld: React.FC<IHelloWorldProps> = ({
+export const FluentDropdown: React.FC<IFluentDropdownProps> = ({
   label,
   themeJSON,
   items,
