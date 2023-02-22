@@ -18,43 +18,22 @@ export interface IHelloWorldProps {
   label?: string;
   themeJSON?: string;
   items: ItemType[];
+  value: string;
+  onChange: (value: string | undefined) => void;
 }
-
-const dropdownStyles: Partial<IDropdownStyles> = { dropdown: { width: 300 } };
-
-const dropdownControlledExampleOptions = [
-  {
-    key: "fruitsHeader",
-    text: "Fruits",
-    itemType: DropdownMenuItemType.Header,
-  },
-  { key: "apple", text: "Apple" },
-  { key: "banana", text: "Banana" },
-  { key: "orange", text: "Orange", disabled: true },
-  { key: "grape", text: "Grape" },
-  { key: "divider_1", text: "-", itemType: DropdownMenuItemType.Divider },
-  {
-    key: "vegetablesHeader",
-    text: "Vegetables",
-    itemType: DropdownMenuItemType.Header,
-  },
-  { key: "broccoli", text: "Broccoli" },
-  { key: "carrot", text: "Carrot" },
-  { key: "lettuce", text: "Lettuce" },
-];
 
 export const HelloWorld: React.FC<IHelloWorldProps> = ({
   label,
   themeJSON,
   items,
+  value,
+  onChange,
 }) => {
-  const [selectedItem, setSelectedItem] = React.useState<IDropdownOption>();
-
-  const onChange = (
+  const onChangeHandler = (
     event: React.FormEvent<HTMLDivElement>,
     item: IDropdownOption | undefined
   ): void => {
-    setSelectedItem(item);
+    onChange(item?.text);
   };
 
   const theme = useTheme(themeJSON);
@@ -63,11 +42,10 @@ export const HelloWorld: React.FC<IHelloWorldProps> = ({
     <ThemeProvider theme={theme}>
       <Dropdown
         label={label}
-        selectedKey={selectedItem ? selectedItem.key : undefined}
-        onChange={onChange}
+        selectedKey={value}
+        onChange={onChangeHandler}
         placeholder="Select an option"
         options={items}
-        // styles={dropdownStyles}
       />
     </ThemeProvider>
   );

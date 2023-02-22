@@ -8,6 +8,7 @@ export class DropdownFluent
 {
   private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
   private notifyOutputChanged: () => void;
+  private selectedValue: string | undefined;
 
   /**
    * Empty constructor.
@@ -56,8 +57,8 @@ export class DropdownFluent
       }
 
       return {
-        key: record.getValue("value"),
-        text: record.getValue("value"),
+        key: record.getValue("itemValue"),
+        text: record.getValue("itemValue"),
         itemType,
       } as ItemType;
     });
@@ -66,8 +67,15 @@ export class DropdownFluent
       label: context.parameters.Label.raw ?? "",
       themeJSON: context.parameters.Theme.raw ?? "",
       items,
+      value: context.parameters.Value.raw ?? "",
+      onChange: this.onChange.bind(this),
     };
     return React.createElement(HelloWorld, props);
+  }
+
+  public onChange(value: string | undefined) {
+    this.selectedValue = value;
+    this.notifyOutputChanged();
   }
 
   /**
@@ -75,7 +83,9 @@ export class DropdownFluent
    * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as “bound” or “output”
    */
   public getOutputs(): IOutputs {
-    return {};
+    return {
+      Value: this.selectedValue,
+    };
   }
 
   /**
