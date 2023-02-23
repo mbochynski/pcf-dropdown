@@ -45,6 +45,9 @@ export const FluentDropdown: React.FC<IFluentDropdownProps> = ({
         onChange={onChangeHandler}
         placeholder="Select an option"
         options={items}
+        calloutProps={{
+          doNotLayer: true,
+        }}
       />
     </ThemeProvider>
   );
